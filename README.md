@@ -43,6 +43,11 @@ Tests for the core types in GameLibrary2048 are available. This test project is 
 
 Coverage is fair with mock up control game data sets to represent common game play scenarios.
 
+Scripts are provided to help run tests in the following runtime environments:
+
+* For Windows: test-win.bat
+* For Linux: test-linux.sh
+
 ## Native AOT
 The GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready.
 
