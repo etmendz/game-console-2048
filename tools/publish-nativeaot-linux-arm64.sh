@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet publish -p:PublishProfile=FolderProfile2
+dotnet publish ../src/GameConsole2048/GameConsole2048.csproj -p:PublishProfile=FolderProfile2

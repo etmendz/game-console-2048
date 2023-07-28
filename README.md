@@ -56,7 +56,7 @@ Publish profiles (.pubxml) are included for the following Runtime Identifiers (R
 
 These can be used as basis/pattern for creating publish profiles that target other RIDs not listed above.
 
-Be sure to run these commands in the same folder where the GameConsole2048 project is.
+Be sure to run the dotnet publish commands above in the same folder where the GameConsole2048 project is.
 
 Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
 
@@ -66,8 +66,6 @@ Scripts are provided to help publish native AOT versions to the following RIDs:
 * For win-x64 (ex. Windows 11): publish-nativeaot-win-x64.bat
 * For linux-x64 (ex. WSL+Debian): publish-nativeaot-linux-x64.sh
 * For linux-arm64 (ex. Raspberry Pi OS): publish-nativeaot-linux-arm64.sh
-
-Be sure to run these scripts or the commands they call in the same folder where the GameConsole2048 project is.
 
 Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
 
