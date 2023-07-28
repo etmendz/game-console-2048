@@ -48,6 +48,8 @@ Scripts are provided to help run tests in the following runtime environments:
 * For Windows: test-win.bat
 * For Linux: test-linux.sh
 
+These can be used as basis/pattern for creating test scripts that target other runtime environments not listed above.
+
 ## Native AOT
 The GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready.
 
@@ -72,7 +74,7 @@ Scripts are provided to help publish native AOT versions for the following RIDs:
 * For linux-x64 (ex. WSL+Debian): publish-nativeaot-linux-x64.sh
 * For linux-arm64 (ex. Raspberry Pi OS): publish-nativeaot-linux-arm64.sh
 
-These can be used as basis/pattern for creating publish profiles that target other RIDs not listed above.
+These can be used as basis/pattern for creating publish scripts that target other RIDs not listed above.
 
 Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
 
