@@ -44,7 +44,7 @@ Tests for the core types in GameLibrary2048 are available. This test project is 
 Coverage is fair with mock up control game data sets to represent common game play scenarios.
 
 ## Native AOT
-The GameConsole2048 solution's projects are native AOT compatible/ready.
+The GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready.
 
 Source generation contexts are created for game model and game stat, each getting its own game IO implementation. These enhancements are important to support publishing native AOT builds.
 
@@ -61,11 +61,13 @@ Be sure to run the dotnet publish commands above in the same folder where the Ga
 Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
 
 ## Tools
-Scripts are provided to help publish native AOT versions to the following RIDs:
+Scripts are provided to help publish native AOT versions for the following RIDs:
 
 * For win-x64 (ex. Windows 11): publish-nativeaot-win-x64.bat
 * For linux-x64 (ex. WSL+Debian): publish-nativeaot-linux-x64.sh
 * For linux-arm64 (ex. Raspberry Pi OS): publish-nativeaot-linux-arm64.sh
+
+These can be used as basis/pattern for creating publish profiles that target other RIDs not listed above.
 
 Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
 
