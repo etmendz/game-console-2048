@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.HighPerformance;
-using System;
 
 namespace GameLibrary2048;
 
@@ -86,13 +85,13 @@ public class GameGrid : GameModel
     public void Load(int[] values, int goal, int moves, int score, bool isWon, TimeSpan gameTime)
     {
         if (_gameCells[0, 0] is null) Initialize();
-        int k = 0;
+        int index = 0;
         foreach (GameCell gameCell in _memory2D.Span)
         {
-            int value = values[k];
+            int value = values[index];
             gameCell.Value = value;
-            Values[k] = value; // Take advantage of this loop to force a deep sync to the base game model.
-            k++;
+            Values[index] = value; // Take advantage of this loop to force a deep sync to the base game model.
+            index++;
         }
         Goal = goal;
         Moves = moves;
