@@ -1,1 +1,1 @@
-dotnet test .\TestGameLibrary2048\TestGameLibrary2048.csproj
+dotnet test .\GameLibrary2048.Tests\GameLibrary2048.Tests.csproj

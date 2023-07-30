@@ -162,6 +162,7 @@ public class GameGrid : GameModel
     /// <param name="gameMove">The <see cref="GameMove"/> to evaluate.</param>
     /// <returns>True if a game cell value was moved, else false.</returns>
     /// <remarks>If a <see cref="GameCell"/> value was moved, increments <see cref="Moves"/> and calls <see cref="Fill"/>.</remarks>
+    /// <exception cref="ArgumentException">Thrown when the <paramref name="gameMove"/> is invalid or not supported.</exception>
     public bool Move(GameMove gameMove)
     {
         bool moved = false;
@@ -171,12 +172,12 @@ public class GameGrid : GameModel
             // Wishing RefEnumerable has a Reverse() method...
             GameCell[] slice = gameMove switch
             {
-                GameMove.None => throw new NotImplementedException(),
+                GameMove.None => throw new ArgumentException("Invalid or unsupported game move.", nameof(gameMove)),
                 GameMove.Up => span2D.GetColumn(i).ToArray(),
                 GameMove.Right => span2D.GetRow(i).ToArray().Reverse().ToArray(),
                 GameMove.Left => span2D.GetRow(i).ToArray(),
                 GameMove.Down => span2D.GetColumn(i).ToArray().Reverse().ToArray(),
-                _ => throw new NotImplementedException()
+                _ => throw new ArgumentException("Invalid or unsupported game move.", nameof(gameMove))
             };
             for (int j = 0; j < 4; j++)
             {

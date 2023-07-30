@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameConsole2048", "src\Game
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLibrary2048", "src\GameLibrary2048\GameLibrary2048.csproj", "{61CDED0C-F827-413C-A8FA-FE20A090AAE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestGameLibrary2048", "test\TestGameLibrary2048\TestGameLibrary2048.csproj", "{DDB9BE9A-F5EE-4731-8D23-20750B99E9E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLibrary2048.Tests", "test\GameLibrary2048.Tests\GameLibrary2048.Tests.csproj", "{7D78F202-AEA5-48F6-8261-A7A56D8C0890}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5EF03421-1DF7-4CD9-BC65-A2F766546A6A}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,10 +28,10 @@ Global
 		{61CDED0C-F827-413C-A8FA-FE20A090AAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61CDED0C-F827-413C-A8FA-FE20A090AAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61CDED0C-F827-413C-A8FA-FE20A090AAE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDB9BE9A-F5EE-4731-8D23-20750B99E9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDB9BE9A-F5EE-4731-8D23-20750B99E9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDB9BE9A-F5EE-4731-8D23-20750B99E9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDB9BE9A-F5EE-4731-8D23-20750B99E9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D78F202-AEA5-48F6-8261-A7A56D8C0890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D78F202-AEA5-48F6-8261-A7A56D8C0890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D78F202-AEA5-48F6-8261-A7A56D8C0890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D78F202-AEA5-48F6-8261-A7A56D8C0890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
