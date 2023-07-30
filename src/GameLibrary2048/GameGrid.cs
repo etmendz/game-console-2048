@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.HighPerformance;
+using System;
 
 namespace GameLibrary2048;
 
@@ -12,6 +13,14 @@ public class GameGrid : GameModel
 
     // The Memory2D{T} wrapper for the game cells...
     private Memory2D<GameCell> _memory2D;
+
+    /// <summary>
+    /// Gets a game cell from the game grid's game cells at the given coordinates.
+    /// </summary>
+    /// <param name="row">The zero-based row coordinate.</param>
+    /// <param name="column">The zero-based column coordinate.</param>
+    /// <returns>The <see cref="GameCell"/> from the <see cref="GameGrid"/> game cells at the given coordinates.</returns>
+    public GameCell this[int row, int column] { get => _gameCells[row, column]; }
 
     /// <summary>
     /// Gets or sets the start time.
@@ -140,20 +149,12 @@ public class GameGrid : GameModel
     /// </example>
     public void SyncValues()
     {
-        int k = 0;
+        int index = 0;
         foreach (GameCell gameCell in _memory2D.Span)
         {
-            base.Values[k++] = gameCell.Value;
+            base.Values[index++] = gameCell.Value;
         }
     }
-
-    /// <summary>
-    /// Gets a game cell from the game grid's game cells at the given coordinates.
-    /// </summary>
-    /// <param name="row">The zero-based row coordinate.</param>
-    /// <param name="column">The zero-based column coordinate.</param>
-    /// <returns>The <see cref="GameCell"/> from the <see cref="GameGrid"/> game cells at the given coordinates.</returns>
-    public GameCell GetGameCell(int row, int column) => _gameCells[row, column];
 
     /// <summary>
     /// Evaluate the game move to update the game's state.
@@ -167,10 +168,55 @@ public class GameGrid : GameModel
         Span2D<GameCell> span2D = _memory2D.Span;
         for (int i = 0; i < 4; i++)
         {
-            foreach (GameCell gameCell in GetSliceForMove(span2D, i, gameMove))
+            // Wishing RefEnumerable has a Reverse() method...
+            GameCell[] slice = gameMove switch
             {
-                if (MoveFill(gameCell, gameMove)) moved = true; // Flag a successful move.
-                if (MoveMerge(gameCell, GetNeighborForMove(gameCell, gameMove))) moved = true; // Flag a successful move.
+                GameMove.None => throw new NotImplementedException(),
+                GameMove.Up => span2D.GetColumn(i).ToArray(),
+                GameMove.Right => span2D.GetRow(i).ToArray().Reverse().ToArray(),
+                GameMove.Left => span2D.GetRow(i).ToArray(),
+                GameMove.Down => span2D.GetColumn(i).ToArray().Reverse().ToArray(),
+                _ => throw new NotImplementedException()
+            };
+            for (int j = 0; j < 4; j++)
+            {
+                // Move values together to fill zeroes
+                int z = j;
+                for (int k = j; k < 4; k++)
+                {
+                    int value = slice[k].Value;
+                    if (value == 0) continue;
+                    if (z < k)
+                    {
+                        slice[z].Value = value;
+                        slice[k].Value = 0;
+                        moved = true;
+                    }
+                    z++;
+                }
+                // Merge matching values
+                if (j < 3)
+                {
+                    GameCell target = slice[j];
+                    GameCell source = slice[j + 1];
+                    int t = target.Value;
+                    if (t != 0)
+                    {
+                        int s = source.Value;
+                        if (t == s)
+                        {
+                            target.Value += s; // Increment the target game cell value with the source game cell value.
+                            Score += target.Value; // Increment the Score with the target game cell's new value.
+                            if (target.Value == Goal)
+                            {
+                                IsWon = true; // If the Goal is reached, the game is won!
+                                CalculateGameTime();
+                            }
+                            source.Value = 0; // Set the source game cell value to 0.
+                            moved = true; // Flag a successful move.
+                        }
+                    }
+                }
             }
         }
         if (moved)
@@ -180,112 +226,6 @@ public class GameGrid : GameModel
         }
         return moved;
     }
-
-    /// <summary>
-    /// Recursively moves a neighbor cell's non-0-value towards a 0-valued game cell.
-    /// </summary>
-    /// <param name="gameCell">The <see cref="GameCell"/> to fill. If 0-valued, it can be assigned with a neighbor cell's non-0-value.</param>
-    /// <param name="gameMove">The <see cref="GameMove"/> determines the direction of the fill.</param>
-    /// <returns>True if a game cell value was moved, else false.</returns>
-    private static bool MoveFill(GameCell? gameCell, GameMove gameMove)
-    {
-        bool moved = false;
-        if (gameCell is not null)
-        {
-            GameCell? neighbor = GetNeighborForMove(gameCell, gameMove);
-            if (neighbor is not null)
-            {
-                if (gameCell.Value == 0)
-                {
-                    if (neighbor.Value == 0) MoveFill(neighbor, gameMove); // Try to fill the neighbor cell.
-                    if (neighbor.Value != 0)
-                    {
-                        gameCell.Value = neighbor.Value; // Move the neighbor cell's value to the current game cell.
-                        neighbor.Value = 0; // Set the neighbor cell's value to 0.
-                        moved = true; // Flag a successful move.
-                        MoveFill(neighbor, gameMove); // Fill the neighbor cell.
-                    }
-                }
-                else
-                {
-                    // Fill the neighbor cell.
-                    if (MoveFill(neighbor, gameMove)) moved = true; // Flag a successful move.
-                }
-            }
-        }
-        return moved;
-    }
-
-    /// <summary>
-    /// If their values are equal, merges the source game cell value with the target game cell value.
-    /// </summary>
-    /// <param name="target">The target game cell.</param>
-    /// <param name="source">The source game cell.</param>
-    /// <returns>True if a <see cref="GameCell"/> value was moved, else false.</returns>
-    /// <remarks>
-    /// <para>A successful merge adds the new target cell value to the <see cref="Score"/>.</para>
-    /// <para>If the target game cell value equals <see cref="Goal"/>, <see cref="IsWon"/> is set to true and <see cref="CalculateGameTime"/> is called.</para>
-    /// </remarks>
-    private bool MoveMerge(GameCell? target, GameCell? source)
-    {
-        bool moved = false;
-        if (target is not null && source is not null)
-        {
-            int t = target.Value;
-            if (t != 0)
-            {
-                int s = source.Value;
-                if (t == s)
-                {
-                    target.Value += s; // Increment the target game cell value with the source game cell value.
-                    Score += target.Value; // Increment the Score with the target game cell's new value.
-                    if (target.Value == Goal)
-                    {
-                        IsWon = true; // If the Goal is reached, the game is won!
-                        CalculateGameTime();
-                    }
-                    source.Value = 0; // Set the source game cell value to 0.
-                    moved = true; // Flag a successful move.
-                }
-            }
-        }
-        return moved;
-    }
-
-    /// <summary>
-    /// Gets the relevant slice from the game grid game cells for the given game move.
-    /// </summary>
-    /// <param name="span2D">The game cells <see cref="Span2D{T}"/> wrapper to slice from.</param>
-    /// <param name="index">The slice index.</param>
-    /// <param name="gameMove">The <see cref="GameMove"/> to evaluate.</param>
-    /// <returns>The relevant slice from the <see cref="GameGrid"/> game cells for the given game move.</returns>
-    /// <exception cref="NotImplementedException">Thrown when the given game move is not supported.</exception>
-    private static IEnumerable<GameCell> GetSliceForMove(Span2D<GameCell> span2D, int index, GameMove gameMove) => gameMove switch
-    {
-        GameMove.None => throw new NotImplementedException(),
-        GameMove.Up => span2D.GetColumn(index).ToArray(),
-        GameMove.Right => span2D.GetRow(index).ToArray().Reverse(),
-        GameMove.Left => span2D.GetRow(index).ToArray(),
-        GameMove.Down => span2D.GetColumn(index).ToArray().Reverse(),
-        _ => throw new NotImplementedException()
-    };
-
-    /// <summary>
-    /// Gets the relevant game cell NEWS neighbor for the given game move.
-    /// </summary>
-    /// <param name="gameCell">The <see cref="GameCell"/> to get a neighbor from.</param>
-    /// <param name="gameMove">The <see cref="GameMove"/> to evaluate.</param>
-    /// <returns>The relevant game cell NEWS neighbor for the given game move.</returns>
-    /// <exception cref="NotImplementedException">Thrown when the given game move is not supported.</exception>
-    private static GameCell? GetNeighborForMove(GameCell? gameCell, GameMove gameMove) => gameMove switch
-    {
-        GameMove.None => throw new NotImplementedException(),
-        GameMove.Up => gameCell?.S,
-        GameMove.Right => gameCell?.W,
-        GameMove.Left => gameCell?.E,
-        GameMove.Down => gameCell?.N,
-        _ => throw new NotImplementedException()
-    };
 
     /// <summary>
     /// If <see cref="IsWon"/> is true, continues the game by doubling the <see cref="Goal"/> and resetting <see cref="IsWon"/> to false.

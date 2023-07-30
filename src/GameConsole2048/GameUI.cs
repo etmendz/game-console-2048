@@ -91,7 +91,7 @@ internal class GameUI
             _stringBuilder.Append(Column);
             for (int j = 0; j < 4; j++)
             {
-                int value = GameGrid.GetGameCell(i, j).Value;
+                int value = GameGrid[i, j].Value;
                 string v = value == 0 ? " " : value.ToString(); // Don't show 0's.
                 int l = v.Length;
                 _stringBuilder.Append(v.PadLeft(Convert.ToInt32((Width - l) / 2) + l).PadRight(Width));

@@ -26,7 +26,7 @@ public class GameGridTests
         {
             for (int j = 0; j < 4; j++)
             {
-                gameCell = gameGrid.GetGameCell(i, j);
+                gameCell = gameGrid[i, j];
                 if (i == 0) Assert.IsNull(gameCell.N, "A top row game cell cannot have an N neighbor.");
                 if (j == 3) Assert.IsNull(gameCell.E, "A rightmost column game cell cannot have an E neighbor.");
                 if (j == 0) Assert.IsNull(gameCell.W, "A leftmost column game cell cannot have a W neighbor.");
@@ -87,25 +87,16 @@ public class GameGridTests
 
     private static void SyncValuesTest_Loop(GameGrid gameGrid)
     {
-        // Values is a 1D array. Game cells is a 2D array (4x4 matrix).
+        // Values is a 1D array. The game grid's game cells is a 2D array (4x4 matrix).
         // This loop aligns and compares each element in Values to its counterpart in game cells.
         for (int i = 0; i < zeroes.Length; i++)
         {
             int value = gameGrid.Values[i];
             int r = i / 4;
             int c = i % 4;
-            int v = gameGrid.GetGameCell(r, c).Value;
+            int v = gameGrid[r, c].Value;
             if (value != v) Assert.Fail($"SyncValuesTest failed: {value} at {i} != {v} at ({r}, {c}).");
         }
-    }
-
-    [TestMethod()]
-    public void GetGameCellTest()
-    {
-        GameGrid gameGrid = new();
-        gameGrid.Start();
-        Assert.IsNotNull(gameGrid.GetGameCell(0, 0));
-        Assert.IsInstanceOfType(gameGrid.GetGameCell(0, 0), typeof(GameCell));
     }
 
     [TestMethod()]
@@ -139,8 +130,8 @@ public class GameGridTests
         GameGrid gameGrid = new();
         gameGrid.Load(wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Up));
-        Assert.AreEqual(2048, gameGrid.GetGameCell(0, 0).Value);
-        Assert.AreEqual(4, gameGrid.GetGameCell(1, 0).Value);
+        Assert.AreEqual(2048, gameGrid[0, 0].Value);
+        Assert.AreEqual(4, gameGrid[1, 0].Value);
         MoveTest_Asserts(gameGrid);
     }
 
@@ -150,8 +141,8 @@ public class GameGridTests
         GameGrid gameGrid = new();
         gameGrid.Load(winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Right));
-        Assert.AreEqual(2048, gameGrid.GetGameCell(0, 2).Value);
-        Assert.AreEqual(4, gameGrid.GetGameCell(0, 3).Value);
+        Assert.AreEqual(2048, gameGrid[0, 2].Value);
+        Assert.AreEqual(4, gameGrid[0, 3].Value);
         MoveTest_Asserts(gameGrid);
     }
 
@@ -161,8 +152,8 @@ public class GameGridTests
         GameGrid gameGrid = new();
         gameGrid.Load(winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Left));
-        Assert.AreEqual(2048, gameGrid.GetGameCell(0, 0).Value);
-        Assert.AreEqual(4, gameGrid.GetGameCell(0, 1).Value);
+        Assert.AreEqual(2048, gameGrid[0, 0].Value);
+        Assert.AreEqual(4, gameGrid[0, 1].Value);
         MoveTest_Asserts(gameGrid);
     }
 
@@ -172,8 +163,8 @@ public class GameGridTests
         GameGrid gameGrid = new();
         gameGrid.Load(wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Down));
-        Assert.AreEqual(2048, gameGrid.GetGameCell(2, 0).Value);
-        Assert.AreEqual(4, gameGrid.GetGameCell(3, 0).Value);
+        Assert.AreEqual(2048, gameGrid[2, 0].Value);
+        Assert.AreEqual(4, gameGrid[3, 0].Value);
         MoveTest_Asserts(gameGrid);
     }
 
