@@ -1,4 +1,9 @@
-﻿namespace GameLibrary2048;
+﻿/*
+* GameLibrary2048 (c) Mendz, etmendz. All rights reserved. 
+* Part of GameConsole2048
+* SPDX-License-Identifier: GPL-3.0-or-later 
+*/
+namespace GameLibrary2048;
 
 /// <summary>
 /// Defines the game randomizer.

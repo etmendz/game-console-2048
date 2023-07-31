@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿/*
+* GameConsole2048 (c) Mendz, etmendz. All rights reserved. 
+* SPDX-License-Identifier: GPL-3.0-or-later 
+*/
+using System.Reflection;
 
 namespace GameConsole2048;
 
@@ -28,7 +32,7 @@ internal static class Game
     private static void Splash()
     {
         Console.CursorVisible = false;
-        Console.WriteLine($"GameConsole2048 {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion} (c) {DateTime.Now.Year} All rights reserved.");
+        Console.WriteLine($"GameConsole2048 {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion} (c) {DateTime.Now.Year} Mendz, etmendz. All rights reserved.");
         Console.WriteLine("A simple console app version of 2048 -- https://github.com/etmendz/GameConsole2048");
         Console.WriteLine();
         Console.WriteLine("Use the arrow keys to move, fill and merge the cell values in the grid.");

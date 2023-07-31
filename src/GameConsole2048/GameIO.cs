@@ -1,4 +1,8 @@
-﻿using GameLibrary2048;
+﻿/*
+* GameConsole2048 (c) Mendz, etmendz. All rights reserved. 
+* SPDX-License-Identifier: GPL-3.0-or-later 
+*/
+using GameLibrary2048;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

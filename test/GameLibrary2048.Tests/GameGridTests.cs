@@ -1,4 +1,9 @@
-﻿namespace GameLibrary2048.Tests;
+﻿/*
+* GameLibrary2048.Tests (c) Mendz, etmendz. All rights reserved. 
+* Part of GameConsole2048
+* SPDX-License-Identifier: GPL-3.0-or-later 
+*/
+namespace GameLibrary2048.Tests;
 
 [TestClass()]
 public class GameGridTests

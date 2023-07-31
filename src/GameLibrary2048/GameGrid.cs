@@ -1,4 +1,9 @@
-﻿using CommunityToolkit.HighPerformance;
+﻿/*
+* GameLibrary2048 (c) Mendz, etmendz. All rights reserved. 
+* Part of GameConsole2048
+* SPDX-License-Identifier: GPL-3.0-or-later 
+*/
+using CommunityToolkit.HighPerformance;
 
 namespace GameLibrary2048;
 

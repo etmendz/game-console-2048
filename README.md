@@ -38,7 +38,7 @@ Built-in features include the ability to keep track of goal, moves, score, won s
 
 Note that the GameLibrary2048 project uses the .NET Community Toolkit High Performance package -- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/high-performance/introduction.
 
-## TestGameLibrary2048
+## GameLibrary2048.Tests
 Tests for the core types in GameLibrary2048 are available. This test project is using MSTest.
 
 Coverage is fair with mock up control game data sets to represent common game play scenarios.
@@ -91,7 +91,7 @@ Build outputs go to the solution's artifacts\ subdirectory:
                 GameLibrary2048\
                     debug\
                     release\
-                TestGameLibrary2048\
+                GameLibrary2048.Tests\
                     debug\*
                     release\*
             obj\
@@ -103,7 +103,7 @@ Build outputs go to the solution's artifacts\ subdirectory:
                 GameLibrary2048\
                     debug\*
                     release\*
-                TestGameLibrary2048\
+                GameLibrary2048.Tests\
                     debug\*
                     release\*
             publish\GameConsole2048\release\<RID>
@@ -113,10 +113,14 @@ Build outputs go to the solution's artifacts\ subdirectory:
                     PublishProfiles\
             GameLibrary2048
         test\
-            TestGameLibrary2048\
+            GameLibrary2048.Tests\
         tools\
 
 ## Known Issues
 The ProcessExit event handler calls the methods to save game stat and game data (model). This event handler is called when the player presses [Esc], or clicks on the console/terminal tab/window's close [x] button.
 
 For the native AOT builds though, the ProcessExit event handler is called only when the player presses [Esc]. This event handler is not called when the player clicks on the console/terminal tab/window's close [x] button.
+
+---
+
+(c) Mendz, etmendz. All rights reserved.
