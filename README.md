@@ -1,3 +1,4 @@
+[Wiki](https://github.com/etmendz/game-console-2048/wiki)
 # GameConsole2048
 Inspired by 2048 -- https://github.com/gabrielecirulli/2048/.
 
@@ -109,8 +110,7 @@ Build outputs go to the solution's artifacts\ subdirectory:
             publish\GameConsole2048\release\<RID>
         src\
             GameConsole2048\
-                Properties\
-                    PublishProfiles\
+                Properties\PublishProfiles\
             GameLibrary2048
         test\
             GameLibrary2048.Tests\
