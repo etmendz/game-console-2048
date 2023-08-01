@@ -111,7 +111,7 @@ Build outputs go to the solution's artifacts\ subdirectory:
         src\
             GameConsole2048\
                 Properties\PublishProfiles\
-            GameLibrary2048
+            GameLibrary2048\
         test\
             GameLibrary2048.Tests\
         tools\
