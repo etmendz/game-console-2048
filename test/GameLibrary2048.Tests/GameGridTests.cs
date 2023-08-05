@@ -10,12 +10,12 @@ public class GameGridTests
 {
     // These control game data sets focus on representing key turning points during game play,
     // while also creating and capturing basic and common scenarios to test.
-    private static readonly int[] zeroes = new int[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private static readonly int[] winrow = new int[16] { 1024, 1024, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private static readonly int[] wonrow = new int[16] { 2048, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private static readonly int[] wincolumn = new int[16] { 1024, 0, 0, 0, 1024, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 };
-    private static readonly int[] woncolumn = new int[16] { 2048, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 };
-    private static readonly int[] gameover = new int[16] { 2, 4, 8, 16, 32, 64, 128, 256, 256, 128, 64, 32, 16, 8, 4, 2 };
+    private static readonly int[] _zeroes = new int[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly int[] _winrow = new int[16] { 1024, 1024, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly int[] _wonrow = new int[16] { 2048, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly int[] _wincolumn = new int[16] { 1024, 0, 0, 0, 1024, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 };
+    private static readonly int[] _woncolumn = new int[16] { 2048, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly int[] _gameover = new int[16] { 2, 4, 8, 16, 32, 64, 128, 256, 256, 128, 64, 32, 16, 8, 4, 2 };
     // A challenge is how to come up with combinations and permutations of values to cover as many scenarios possible,
     // while also considering the fact that the game grid game cells are randomly filled during game play.
 
@@ -25,7 +25,7 @@ public class GameGridTests
         GameGrid gameGrid = new();
         Assert.AreEqual(16, gameGrid.Values.Length);
         CollectionAssert.AllItemsAreNotNull(gameGrid.Values);
-        CollectionAssert.AreEqual(zeroes, gameGrid.Values);
+        CollectionAssert.AreEqual(_zeroes, gameGrid.Values);
         GameCell gameCell;
         for (int i = 0; i < 4; i++)
         {
@@ -50,7 +50,7 @@ public class GameGridTests
     {
         GameGrid gameGrid = new();
         gameGrid.Start();
-        CollectionAssert.AreNotEqual(zeroes, gameGrid.Values);
+        CollectionAssert.AreNotEqual(_zeroes, gameGrid.Values);
         Assert.IsTrue(gameGrid.Values.Count((value) => value == 2 || value == 4) == 2, "Expecting two game cells to be filled/valued with either 2 or 4.");
         Assert.IsTrue(gameGrid.Values.Count((value) => value == 0) == 14);
     }
@@ -59,7 +59,7 @@ public class GameGridTests
     public void LoadTest()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         LoadTest_Asserts(gameGrid);
     }
 
@@ -67,7 +67,7 @@ public class GameGridTests
     public void LoadTest_GameModel()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(new GameModel() { Values = winrow, Moves = 1, Score = 1, IsWon = false, GameTime = new TimeSpan(0, 15, 0) });
+        gameGrid.Load(new GameModel() { Values = _winrow, Moves = 1, Score = 1, IsWon = false, GameTime = new TimeSpan(0, 15, 0) });
         LoadTest_Asserts(gameGrid);
     }
 
@@ -94,7 +94,7 @@ public class GameGridTests
     {
         // Values is a 1D array. The game grid's game cells is a 2D array (4x4 matrix).
         // This loop aligns and compares each element in Values to its counterpart in game cells.
-        for (int i = 0; i < zeroes.Length; i++)
+        for (int i = 0; i < _zeroes.Length; i++)
         {
             int value = gameGrid.Values[i];
             int r = i / 4;
@@ -133,7 +133,7 @@ public class GameGridTests
     public void MoveTest_Up()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Up));
         Assert.AreEqual(2048, gameGrid[0, 0].Value);
         Assert.AreEqual(4, gameGrid[1, 0].Value);
@@ -144,7 +144,7 @@ public class GameGridTests
     public void MoveTest_Right()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Right));
         Assert.AreEqual(2048, gameGrid[0, 2].Value);
         Assert.AreEqual(4, gameGrid[0, 3].Value);
@@ -155,7 +155,7 @@ public class GameGridTests
     public void MoveTest_Left()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_winrow, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Left));
         Assert.AreEqual(2048, gameGrid[0, 0].Value);
         Assert.AreEqual(4, gameGrid[0, 1].Value);
@@ -166,7 +166,7 @@ public class GameGridTests
     public void MoveTest_Down()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_wincolumn, 2048, 1, 1, false, new TimeSpan(0, 15, 0));
         Assert.IsTrue(gameGrid.Move(GameMove.Down));
         Assert.AreEqual(2048, gameGrid[2, 0].Value);
         Assert.AreEqual(4, gameGrid[3, 0].Value);
@@ -185,7 +185,7 @@ public class GameGridTests
     public void MoveTest_None()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(gameover, 2048, 1, 1, false, new TimeSpan(0));
+        gameGrid.Load(_gameover, 2048, 1, 1, false, new TimeSpan(0));
         MoveTest_None_Asserts(gameGrid);
     }
 
@@ -211,7 +211,7 @@ public class GameGridTests
     public void ContinueTest_IsWon()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(wonrow, 2048, 1, 1, true, new TimeSpan(0, 15, 0));
+        gameGrid.Load(_wonrow, 2048, 1, 1, true, new TimeSpan(0, 15, 0));
         gameGrid.Continue();
         Assert.AreNotEqual(2048, gameGrid.Goal);
         Assert.AreEqual(4096, gameGrid.Goal);
@@ -230,7 +230,7 @@ public class GameGridTests
     public void GameOverTest_GameOver()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(gameover, 2048, 1, 1, false, new TimeSpan(0));
+        gameGrid.Load(_gameover, 2048, 1, 1, false, new TimeSpan(0));
         MoveTest_None_Asserts(gameGrid);
         Assert.IsTrue(gameGrid.GameOver());
     }
@@ -239,7 +239,7 @@ public class GameGridTests
     public void CalculateGameTimeTest()
     {
         GameGrid gameGrid = new();
-        gameGrid.Load(woncolumn, 2048, 1, 1, true, new TimeSpan(0));
+        gameGrid.Load(_woncolumn, 2048, 1, 1, true, new TimeSpan(0));
         gameGrid.StartTime = DateTime.Now;
         Thread.Sleep(1000);
         gameGrid.Continue();
@@ -254,6 +254,6 @@ public class GameGridTests
         GameGrid gameGrid = new();
         gameGrid.Start();
         gameGrid.End();
-        CollectionAssert.AreEqual(zeroes, gameGrid.Values);
+        CollectionAssert.AreEqual(_zeroes, gameGrid.Values);
     }
 }

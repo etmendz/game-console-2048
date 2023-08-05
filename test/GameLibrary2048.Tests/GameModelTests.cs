@@ -8,7 +8,7 @@ namespace GameLibrary2048.Tests;
 [TestClass()]
 public class GameModelTests : GameModel
 {
-    private static readonly int[] expected = new int[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static readonly int[] _expected = new int[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     [TestMethod()]
     public void GameModelTest()
@@ -26,6 +26,6 @@ public class GameModelTests : GameModel
     {
         EmptyValues();
         CollectionAssert.AllItemsAreNotNull(Values);
-        CollectionAssert.AreEqual(expected, Values);
+        CollectionAssert.AreEqual(_expected, Values);
     }
 }
