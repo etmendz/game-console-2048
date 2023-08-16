@@ -33,7 +33,7 @@ internal static class Game
     {
         Console.CursorVisible = false;
         Console.WriteLine($"GameConsole2048 {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion} (c) {DateTime.Now.Year} Mendz, etmendz. All rights reserved.");
-        Console.WriteLine("A simple console app version of 2048 -- https://github.com/etmendz/GameConsole2048");
+        Console.WriteLine("A simple console app version of 2048 -- https://github.com/etmendz/game-console-2048");
         Console.WriteLine();
         Console.WriteLine("Use the arrow keys to move, fill and merge the cell values in the grid.");
         Console.WriteLine();
