@@ -1,9 +1,8 @@
 ﻿/*
-* GameLibrary2048 (c) Mendz, etmendz. All rights reserved. 
-* Part of GameConsole2048
+* GameConsole2048 (c) Mendz, etmendz. All rights reserved. 
 * SPDX-License-Identifier: GPL-3.0-or-later 
 */
-namespace GameLibrary2048;
+namespace GameConsole2048;
 
 /// <summary>
 /// Specifies constants that define valid game moves.

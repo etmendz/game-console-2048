@@ -1,16 +1,16 @@
 ﻿/*
-* GameLibrary2048 (c) Mendz, etmendz. All rights reserved. 
-* Part of GameConsole2048
+* GameConsole2048 (c) Mendz, etmendz. All rights reserved. 
 * SPDX-License-Identifier: GPL-3.0-or-later 
 */
 using CommunityToolkit.HighPerformance;
+using GameLibrary;
 
-namespace GameLibrary2048;
+namespace GameConsole2048;
 
 /// <summary>
 /// Defines a game grid.
 /// </summary>
-public class GameGrid : GameModel
+public class GameGrid : GameModel, IGamePlay<GameMove, bool>
 {
     // The game cells...
     private GameCell[,] _gameCells = new GameCell[4, 4];
@@ -72,10 +72,11 @@ public class GameGrid : GameModel
     /// <summary>
     /// Starts the game by filling two game cells in the <see cref="GameGrid"/>.
     /// </summary>
-    public void Start()
+    public bool Start()
     {
         if (_gameCells[0,0] is null) Initialize();
         Fill(2); // Fill a couple of random game cells.
+        return true;
     }
 
     /// <summary>
@@ -128,7 +129,7 @@ public class GameGrid : GameModel
             for (int i = 0; i < count; i++)
             {
                 // Randomly find a 0-valued game cell in the list, and randomly set its value to either 2 or 4.
-                int z = GameRandomizer.Next(zeroes.Count);
+                int z = GameLibrary.GameRandomizer.Next(zeroes.Count);
                 zeroes[z].Value = GameRandomizer.Next();
                 zeroes.RemoveAt(z);
                 if (zeroes.Count == 0) break;
@@ -167,7 +168,7 @@ public class GameGrid : GameModel
     /// <returns>True if a game cell value was moved, else false.</returns>
     /// <remarks>If a <see cref="GameCell"/> value was moved, increments <see cref="Moves"/> and calls <see cref="Fill"/>.</remarks>
     /// <exception cref="ArgumentException">Thrown when the <paramref name="gameMove"/> is invalid or not supported.</exception>
-    public bool Move(GameMove gameMove)
+    public bool Action(GameMove gameMove)
     {
         bool moved = false;
         Span2D<GameCell> span2D = _memory2D.Span;
@@ -235,13 +236,14 @@ public class GameGrid : GameModel
     /// <summary>
     /// If <see cref="IsWon"/> is true, continues the game by doubling the <see cref="Goal"/> and resetting <see cref="IsWon"/> to false.
     /// </summary>
-    public void Continue()
+    public bool Continue()
     {
         if (IsWon)
         {
             Goal *= 2;
             IsWon = false;
         }
+        return true;
     }
 
     /// <summary>

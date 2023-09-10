@@ -4,52 +4,27 @@ Inspired by 2048 -- https://github.com/gabrielecirulli/2048/.
 
 GameConsole2048 is a simple console app version of 2048 written in C#.
 
-The game's program flow reads like Play -> Ready -> Set -> Go, which implements the basic game construct:
+Uses the [GameLibrary](https://github.com/etmendz/game-library/wiki) framework to define the game play, game UI and overall game flow.
 
-    if (Start())
-    {
-        do
-        {
-            if (Move())
-            {
-                if (!Continue()) break;
-            }
-        } while (!GameOver());
-    }
-    End();
+Uses the .NET Community Toolkit High Performance package -- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/high-performance/introduction.
 
-The game UI is designed to align with the basic game construct described above, thus the methods to Start(), Move(), Continue(), GameOver() and End().
+## Game UI
+The game UI implements IGameUI.
 
-The game UX provides the capabilities to support game flow and game play interactions.
+The game UX provides the capabilities to support game play interactions.
 
 The game IO provides the capabilities to support saving and loading game stat and game data (model).
 
 Built-in features include the ability to save and load game stat and game data (model).
 
-Note that the GameConsole2048 project references the GameLibrary2048 project.
-
-## GameLibrary2048
-The game grid is designed to align with the basic game construct described above, thus the methods to Start(), Move(), Continue(), GameOver() and End().
+## Game Play
+The game grid implements IGamePlay.
 
 The game model is derived by the the game grid, which therefore also represents the game data, that can be used to save and load a game.
 
 The game cell has the NEWS (north, east, west, south) properties, which are references to the game cell's neighbors in the game grid.
 
 Built-in features include the ability to keep track of goal, moves, score, won status, game time and game over state.
-
-Note that the GameLibrary2048 project uses the .NET Community Toolkit High Performance package -- https://learn.microsoft.com/en-us/dotnet/communitytoolkit/high-performance/introduction.
-
-## GameLibrary2048.Tests
-Tests for the core types in GameLibrary2048 are available. This test project is using MSTest.
-
-Coverage is fair with mock up control game data sets to represent common game play scenarios.
-
-Scripts are provided to help run tests in the following runtime environments:
-
-* For Windows: test-win.bat
-* For Linux: test-linux.sh
-
-These can be used as basis/pattern for creating test scripts that target other runtime environments not listed above.
 
 ## Native AOT
 The GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready.
@@ -89,31 +64,16 @@ Build outputs go to the solution's artifacts\ subdirectory:
                     debug\
                     release\
                     release_<RID>\*
-                GameLibrary2048\
-                    debug\
-                    release\
-                GameLibrary2048.Tests\
-                    debug\*
-                    release\*
             obj\
                 GameConsole2048\
                     debug\*
                     publish\<RID>\
                     release\*
                     release_<RID>\*
-                GameLibrary2048\
-                    debug\*
-                    release\*
-                GameLibrary2048.Tests\
-                    debug\*
-                    release\*
             publish\GameConsole2048\release\<RID>
         src\
             GameConsole2048\
                 Properties\PublishProfiles\
-            GameLibrary2048\
-        test\
-            GameLibrary2048.Tests\
         tools\
 
 ## Known Issues
