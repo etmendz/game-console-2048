@@ -41,7 +41,7 @@ These can be used as basis/pattern for creating publish profiles that target oth
 
 Be sure to run the dotnet publish commands above in the same folder where the GameConsole2048 project is.
 
-Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
+Although the GameConsole2048 project is native AOT compatible/ready, publishing to a native AOT build is not required.
 
 ## Tools
 Scripts are provided to help publish native AOT versions for the following RIDs:
@@ -52,7 +52,7 @@ Scripts are provided to help publish native AOT versions for the following RIDs:
 
 These can be used as basis/pattern for creating publish scripts that target other RIDs not listed above.
 
-Although the GameConsole2048 and GameLibrary2048 projects are native AOT compatible/ready, publishing to a native AOT build is not required.
+Although the GameConsole2048 project is native AOT compatible/ready, publishing to a native AOT build is not required.
 
 ## Artifacts
 Build outputs go to the solution's artifacts\ subdirectory:
