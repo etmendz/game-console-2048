@@ -204,5 +204,6 @@ internal class GameUI : IGameUI<GameGrid, GameMove, bool>
         GamePlay.SyncValues(); // Force a deep sync to the base game model.
         GameModelIO.Write(_gameDataFile, GamePlay);
         SaveGameStat();
+        Console.CursorVisible = true;
     }
 }
