@@ -8,7 +8,7 @@ namespace GameConsole2048;
 
 internal static class Program
 {
-    private static void Main() => new GameConsole<GameUI, GameGrid, GameMove, bool>(
+    private static void Main() => new GameConsole<GameUI, GameGrid>(
         "GameConsole2048",
         "Mendz, etmendz. All rights reserved.",
         "A simple console app version of 2048 -- https://github.com/etmendz/game-console-2048",

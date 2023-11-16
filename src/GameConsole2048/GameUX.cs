@@ -11,6 +11,8 @@ namespace GameConsole2048;
 /// </summary>
 internal static class GameUX
 {
+    private static readonly GameConsoleUX _gameConsoleUX = new();
+
     /// <summary>
     /// Gets a game move.
     /// </summary>
@@ -19,7 +21,7 @@ internal static class GameUX
     {
         GameMove move = GameMove.None;
         // Evaluate a key stroke in to a game move.
-        switch (new GameConsoleUX().GetMove())
+        switch (_gameConsoleUX.GetMove())
         {
             case ConsoleKey.UpArrow: move = GameMove.Up; break;
             case ConsoleKey.RightArrow: move = GameMove.Right; break;

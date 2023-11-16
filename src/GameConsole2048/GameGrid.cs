@@ -10,7 +10,7 @@ namespace GameConsole2048;
 /// <summary>
 /// Defines a game grid.
 /// </summary>
-public class GameGrid : GameModel, IGamePlay<GameMove, bool>
+public class GameGrid : GameModel, IGamePlay
 {
     // The game cells...
     private GameCell[,] _gameCells = new GameCell[4, 4];
@@ -118,7 +118,7 @@ public class GameGrid : GameModel, IGamePlay<GameMove, bool>
     /// <param name="count">The number of 0-valued game cells to fill. Default is 1.</param>
     private void Fill(int count = 1)
     {
-        List<GameCell> zeroes = new();
+        List<GameCell> zeroes = [];
         foreach (GameCell gameCell in _memory2D.Span)
         {
             // List all 0-valued game cells in the game grid.
@@ -129,7 +129,7 @@ public class GameGrid : GameModel, IGamePlay<GameMove, bool>
             for (int i = 0; i < count; i++)
             {
                 // Randomly find a 0-valued game cell in the list, and randomly set its value to either 2 or 4.
-                int z = GameLibrary.GameRandomizer.Next(zeroes.Count);
+                int z = Random.Shared.Next(zeroes.Count);
                 zeroes[z].Value = GameRandomizer.Next();
                 zeroes.RemoveAt(z);
                 if (zeroes.Count == 0) break;
@@ -164,12 +164,13 @@ public class GameGrid : GameModel, IGamePlay<GameMove, bool>
     /// <summary>
     /// Evaluate the game move to update the game's state.
     /// </summary>
-    /// <param name="gameMove">The <see cref="GameMove"/> to evaluate.</param>
+    /// <param name="gameActionInfo">The <see cref="GameActionInfo"/> to evaluate.</param>
     /// <returns>True if a game cell value was moved, else false.</returns>
     /// <remarks>If a <see cref="GameCell"/> value was moved, increments <see cref="Moves"/> and calls <see cref="Fill"/>.</remarks>
-    /// <exception cref="ArgumentException">Thrown when the <paramref name="gameMove"/> is invalid or not supported.</exception>
-    public bool Action(GameMove gameMove)
+    /// <exception cref="InvalidOperationException">Thrown when the game move is invalid or not supported.</exception>
+    public bool Action(GameActionInfo gameActionInfo)
     {
+        GameMove gameMove = (GameMove)gameActionInfo.Input!;
         bool moved = false;
         Span2D<GameCell> span2D = _memory2D.Span;
         for (int i = 0; i < 4; i++)
@@ -177,12 +178,12 @@ public class GameGrid : GameModel, IGamePlay<GameMove, bool>
             // Wishing RefEnumerable has a Reverse() method...
             GameCell[] slice = gameMove switch
             {
-                GameMove.None => throw new ArgumentException("Invalid or unsupported game move.", nameof(gameMove)),
+                GameMove.None => throw new InvalidOperationException("Invalid or unsupported game move."),
                 GameMove.Up => span2D.GetColumn(i).ToArray(),
                 GameMove.Right => span2D.GetRow(i).ToArray().Reverse().ToArray(),
                 GameMove.Left => span2D.GetRow(i).ToArray(),
                 GameMove.Down => span2D.GetColumn(i).ToArray().Reverse().ToArray(),
-                _ => throw new ArgumentException("Invalid or unsupported game move.", nameof(gameMove))
+                _ => throw new InvalidOperationException("Invalid or unsupported game move.")
             };
             for (int j = 0; j < 4; j++)
             {

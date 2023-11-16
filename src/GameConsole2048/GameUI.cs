@@ -10,7 +10,7 @@ namespace GameConsole2048;
 /// <summary>
 /// Defines the game UI.
 /// </summary>
-internal class GameUI : IGameUI<GameGrid, GameMove, bool>
+internal class GameUI : IGameUI<GameGrid>
 {
     // Game UI rendering constants...
     const string Row = "---------------------------------";
@@ -118,7 +118,10 @@ internal class GameUI : IGameUI<GameGrid, GameMove, bool>
     /// Waits for a game move.
     /// </summary>
     /// <returns>True if a move was made, else false.</returns>
-    public bool Action() => GamePlay.Action(GameUX.GetMove());
+    public bool Action()
+    {
+        return GamePlay.Action(new() { Input = GameUX.GetMove() });
+    }
 
     /// <summary>
     /// Continues the game. If the game is won, prompts to continue the game.
